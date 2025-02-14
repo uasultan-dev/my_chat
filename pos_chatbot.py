@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # CORS যোগ করুন
 import os
 import json
 from transformers import pipeline
 
 app = Flask(__name__)
+CORS(app)  # CORS এনাবল করুন
 
 # প্রশ্ন-উত্তর ডাটাবেস লোড করা
 FAQ_FILE = "faq.json"
