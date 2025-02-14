@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # CORS যোগ করুন
+from flask_cors import CORS
 import os
 import json
 from transformers import pipeline
 
 app = Flask(__name__)
-CORS(app)  # CORS এনাবল করুন
+CORS(app, resources={r"/*": {"origins": "*"}})  # CORS ফিক্স করা হয়েছে
 
 # প্রশ্ন-উত্তর ডাটাবেস লোড করা
 FAQ_FILE = "faq.json"
@@ -18,8 +18,8 @@ def load_faq():
 
 db = load_faq()
 
-# AI মডেল সেটআপ
-qa_model = pipeline("text2text-generation", model="google/flan-t5-small")
+# AI মডেল সেটআপ (Flan-T5 বাদ দিয়ে DistilGPT-2 ব্যবহার করা হয়েছে)
+qa_model = pipeline("text-generation", model="distilgpt2")
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
