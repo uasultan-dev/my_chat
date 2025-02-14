@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import os
 import json
 from transformers import pipeline
 
@@ -41,5 +42,5 @@ def chatbot():
     return jsonify({"answer": generated_answer})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000, debug=True)
-
+    port = int(os.environ.get("PORT", 5000))  # Render 5000 পোর্ট ব্যবহার করবে
+    app.run(host='0.0.0.0', port=port, debug=True)
